@@ -16,6 +16,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.nio.charset.Charset;
 import java.time.Duration;
 
 @Configuration
@@ -32,6 +33,8 @@ public class RedisConfig {
         serializer.setObjectMapper(mapper);
         return serializer;
     }
+
+
 /*
 
     @Bean
@@ -53,17 +56,17 @@ public class RedisConfig {
                 .build();
 
     }
+*/
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+/*    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setValueSerializer(springSessionDefaultRedisSerializer());
         //使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(new StringRedisSerializer());
+        template.setKeySerializer(springSessionDefaultRedisSerializer());
         template.afterPropertiesSet();
         return template;
-    }
-*/
+    }*/
 
 }

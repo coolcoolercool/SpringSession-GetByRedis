@@ -2,7 +2,9 @@ package org.example.redissession.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.example.redissession.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,6 +33,20 @@ public class RedisSessionController {
         String key = "sessionKey";
         String value = "sessionValue";
         request.getSession().setAttribute(key,value);
+        request.getSession().setMaxInactiveInterval(30 * 60 * 60);
+        log.info("sessionId: {}", request.getSession().getId());
+        return request.getSession().getId();
+    }
+
+    @ResponseBody
+    @RequestMapping("/setSessionBoy")
+    public String setSessionBoy(HttpServletRequest request){
+        String key = "sessionKey";
+        String value = "sessionValue";
+        Student student = new Student();
+        student.setAge(30);
+        student.setName("zz2");
+        request.getSession().setAttribute(key,student);
         request.getSession().setMaxInactiveInterval(30 * 60 * 60);
         log.info("sessionId: {}", request.getSession().getId());
         return request.getSession().getId();
