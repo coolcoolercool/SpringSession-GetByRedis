@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-@Configuration
+/*@Configuration
 public class RedisConfigBak {
     @Bean(name = "redisTemplate")
     public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
@@ -25,4 +25,4 @@ public class RedisConfigBak {
         template.setHashKeySerializer(redisSerializer);
         return template;
     }
-}
+}*/

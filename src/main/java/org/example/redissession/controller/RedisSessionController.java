@@ -11,9 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -61,6 +59,12 @@ public class RedisSessionController {
     @ResponseBody
     @RequestMapping("/getSession/{key}")
     public String getSession(@PathVariable String key , HttpServletRequest request){
+        HttpSession session = request.getSession();
+        log.info("session: {}", session);
+        HashMap student = (HashMap) request.getSession().getAttribute(key);
+        log.info("student: {}", student);
+        log.info("name: {}", student.get("name"));
+        log.info("age: {}", student.get("age"));
         return request.getSession().getAttribute(key) + "---- sessionId:" + request.getSession().getId() ;
     }
 

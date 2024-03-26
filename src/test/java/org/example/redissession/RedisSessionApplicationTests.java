@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.HashMap;
+
 @SpringBootTest
 @Slf4j
 class RedisSessionApplicationTests {
@@ -23,6 +25,8 @@ class RedisSessionApplicationTests {
 	String hashKey = "hashKey";
 	String hashField = "hashField";
 	String hashValue = "hashValue";
+
+	String hashSessionKey = "spring:session:sessions:13198ffa-d9f9-4cae-a806-82f6c176623b";
 
 	@Test
 	void testRedis() {
@@ -47,15 +51,24 @@ class RedisSessionApplicationTests {
 		String hashValue = (String) redisTemplate.opsForHash().get(hashKey, hashField);
 		log.info("hashValue: {}", hashValue);
 
-		String sessionStudentValue = (String) redisTemplate.opsForHash().get("spring:session:sessions:1871c903-d683-402b-af88-dcc820e49f27",
-				"sessionAttr:sessionKey");
+		String sessionStudentValue = (String) redisTemplate.opsForHash().get(hashSessionKey, "sessionAttr:sessionKey");
 		log.info("sessionStudentValue: {}", sessionStudentValue);
 
-		ObjectMapper  objectMapper = new ObjectMapper();
+		ObjectMapper objectMapper = new ObjectMapper();
 		Student student = objectMapper.readValue(sessionStudentValue, Student.class);
 		log.info("Student: {}", student);
-
-
 	}
 
+	@Test
+	void testDecodeRedisSessionJsonValue() {
+		redisTemplate.opsForHash().put(hashKey, hashField, hashValue);
+
+		// 如果redis的对于hash value的序列化，设置为json，那么这里通过key获取，那么就是一个HashMap
+		String hashValue = (String) redisTemplate.opsForHash().get(hashKey, hashField);
+		log.info("hashValue: {}", hashValue);
+
+		HashMap sessionStudentValue = (HashMap) redisTemplate.opsForHash().get("spring:session:sessions:77b39889-17bf-4da6-b471-aa9bf38890e8",
+				"sessionAttr:sessionKey");
+		log.info("sessionStudentValue: {}", sessionStudentValue);
+	}
 }
