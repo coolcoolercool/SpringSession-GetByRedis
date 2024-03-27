@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.redissession.entity.Student;
+import org.example.redissession.entity.UserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +27,7 @@ class RedisSessionApplicationTests {
 	String hashField = "hashField";
 	String hashValue = "hashValue";
 
-	String hashSessionKey = "spring:session:sessions:13198ffa-d9f9-4cae-a806-82f6c176623b";
+	String hashSessionKey = "spring:session:sessions:f8c97aff-d424-434a-941e-9bdaeac38f3b";
 
 	@Test
 	void testRedis() {
@@ -57,6 +58,16 @@ class RedisSessionApplicationTests {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Student student = objectMapper.readValue(sessionStudentValue, Student.class);
 		log.info("Student: {}", student);
+	}
+
+	@Test
+	void testRedisSessionUSerInfo() throws JsonProcessingException {
+		String sessionStudentValue = (String) redisTemplate.opsForHash().get(hashSessionKey, "sessionAttr:sessionKey");
+		log.info("sessionStudentValue: {}", sessionStudentValue);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		UserInfo user = objectMapper.readValue(sessionStudentValue, UserInfo.class);
+		log.info("UserInfo: {}", user);
 	}
 
 	@Test

@@ -1,14 +1,17 @@
 package org.example.redissession.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.example.redissession.entity.Student;
+import org.example.redissession.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -20,6 +23,7 @@ public class RedisSessionController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    String key = "spring:session:sessions:9e220b31-f190-46d5-a8ba-b1548fe0ad01";
     /**
      * session设置
      * @param request
@@ -37,7 +41,7 @@ public class RedisSessionController {
     }
 
     @ResponseBody
-    @RequestMapping("/setSessionBoy")
+    @RequestMapping("/setSessionStudent")
     public String setSessionBoy(HttpServletRequest request){
         String key = "sessionKey";
         String value = "sessionValue";
@@ -48,6 +52,46 @@ public class RedisSessionController {
         request.getSession().setMaxInactiveInterval(30 * 60 * 60);
         log.info("sessionId: {}", request.getSession().getId());
         return request.getSession().getId();
+    }
+
+    @ResponseBody
+    @RequestMapping("/setSessionUserInfo")
+    public String setSessionUSerInfo(HttpServletRequest request){
+        UserInfo user = new UserInfo();
+        user.setUserName("userName");
+        List<String> urlList = new ArrayList<>();
+        urlList.add("/test/setSessionBoy");
+        urlList.add("/test/getSessionUserInfo");
+        user.setUrlList(urlList);
+        request.getSession().setAttribute(key,user);
+        request.getSession().setMaxInactiveInterval(30 * 60 * 60);
+        log.info("sessionId: {}", request.getSession().getId());
+        return request.getSession().getId();
+    }
+
+    private String TOKEN_HEADER_KEY = "auth_token";
+    private String HASH_SESSION_KEY_PREFIX = "spring:session:sessions:";
+    @RequestMapping("/getSessionUserInfo")
+    public String getSessionUSerInfo(HttpServletRequest request){
+        String token = request.getHeader(TOKEN_HEADER_KEY);
+        if (StringUtils.isEmpty(token)) {
+            log.error("token is null");
+        }
+        log.info("token: {}", token);
+        String hashKey = HASH_SESSION_KEY_PREFIX + token;
+
+        String userInfoStr = (String) redisTemplate.opsForHash().get(hashKey, "sessionAttr:sessionKey");
+        log.info("userInfoStr: {}", userInfoStr);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        UserInfo userIno = null;
+        try {
+            userIno = objectMapper.readValue(userInfoStr, UserInfo.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("UserInfo: {}", userIno);
+        return userInfoStr;
     }
 
     /**
@@ -92,6 +136,4 @@ public class RedisSessionController {
         HttpSession session = request.getSession();
         session.setAttribute("userName", "xiaoMimng");
     }
-
-
 }
