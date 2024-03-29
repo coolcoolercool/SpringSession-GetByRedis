@@ -27,7 +27,7 @@ class RedisSessionApplicationTests {
 	String hashField = "hashField";
 	String hashValue = "hashValue";
 
-	String hashSessionKey = "spring:session:sessions:f8c97aff-d424-434a-941e-9bdaeac38f3b";
+	String hashSessionKey = "spring:session:sessions:a2fa19b6-5777-4f86-8f8e-cffae8cd0649";
 
 	@Test
 	void testRedis() {

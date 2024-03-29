@@ -2,19 +2,20 @@ package org.example.redissession.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.example.redissession.entity.Student;
 import org.example.redissession.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -23,7 +24,7 @@ public class RedisSessionController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    String key = "spring:session:sessions:9e220b31-f190-46d5-a8ba-b1548fe0ad01";
+    String key = "sessionKey";
     /**
      * session设置
      * @param request
@@ -71,7 +72,7 @@ public class RedisSessionController {
 
     private String TOKEN_HEADER_KEY = "auth_token";
     private String HASH_SESSION_KEY_PREFIX = "spring:session:sessions:";
-    @RequestMapping("/getSessionUserInfo")
+    @GetMapping("/getSessionUserInfo")
     public String getSessionUSerInfo(HttpServletRequest request){
         String token = request.getHeader(TOKEN_HEADER_KEY);
         if (StringUtils.isEmpty(token)) {
