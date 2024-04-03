@@ -137,4 +137,10 @@ public class RedisSessionController {
         HttpSession session = request.getSession();
         session.setAttribute("userName", "xiaoMimng");
     }
+
+
+    @GetMapping("testRequest")
+    public void getRequestContent() {
+
+    }
 }

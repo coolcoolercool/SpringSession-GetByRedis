@@ -9,9 +9,16 @@ spring:
         max-idle: 16
         max-active: 32
         min-idle: 8
-  session:
-    redis:
-      serializer: jackson
+  cloud:
+    sentinel:
+      enabled: true
+      eager: true # 取消控制台懒加载，项目启动即连接Sentinel
+      transport:
+        port: 8082 # 本地客户端的端口
+        dashboard: localhost:8081 # 控制台地址
+      filter:
+        enabled: false
+
 server:
   port: 8090
 
