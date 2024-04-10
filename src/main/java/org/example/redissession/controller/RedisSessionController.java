@@ -134,13 +134,14 @@ public class RedisSessionController {
 
     @GetMapping("/autoSession/")
     public void addRedisSession(HttpServletRequest request){
+        log.info("RedisSessionController autoSession");
         HttpSession session = request.getSession();
         session.setAttribute("userName", "xiaoMimng");
     }
 
 
-    @GetMapping("testRequest")
-    public void getRequestContent() {
-
+    @GetMapping("/testRequest")
+    public void getRequestContent(HttpServletRequest request) {
+        log.info("request.getRequestURI(): {} ", request.getRequestURI());
     }
 }
