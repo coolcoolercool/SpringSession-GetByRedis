@@ -37,6 +37,7 @@ public class RedisConfig {
         template.setKeySerializer(stringRedisSerialize);
         //value序列化
         template.setValueSerializer(jsonRedisSerializer);
+        //template.setValueSerializer(stringRedisSerialize);
 
         // 如果是value 是json序列化，那么直接通过key获取，返回的是一个 HashMap 结构
         // template.setHashKeySerializer(stringRedisSerialize);
@@ -46,7 +47,7 @@ public class RedisConfig {
         // key haspmap序列化
         template.setHashKeySerializer(stringRedisSerialize);
         //value hashmap序列化
-        template.setHashValueSerializer(stringRedisSerialize);
+        template.setHashValueSerializer(jsonRedisSerializer);
 
         return template;
     }

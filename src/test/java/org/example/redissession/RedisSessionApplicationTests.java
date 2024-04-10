@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 @Slf4j
@@ -81,5 +84,23 @@ class RedisSessionApplicationTests {
 		HashMap sessionStudentValue = (HashMap) redisTemplate.opsForHash().get("spring:session:sessions:77b39889-17bf-4da6-b471-aa9bf38890e8",
 				"sessionAttr:sessionKey");
 		log.info("sessionStudentValue: {}", sessionStudentValue);
+	}
+
+	@Test
+	void testRedisGetAndSet() {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setUserName("userName");
+		List<String> urlList = new ArrayList<>();
+		urlList.add("/good/url");
+		urlList.add("/bad/url");
+		userInfo.setUrlList(urlList);
+
+		List<String> functionList = new ArrayList<>();
+		functionList.add("function_id_1");
+		functionList.add("function_id_0");
+		userInfo.setFunctionList(functionList);
+
+		redisTemplate.opsForValue().set("userInfo", userInfo);
+		//redisTemplate.opsForHash().put("hashKey", "userInfo", userInfo);
 	}
 }

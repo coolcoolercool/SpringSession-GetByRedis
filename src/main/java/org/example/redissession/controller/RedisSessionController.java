@@ -144,4 +144,26 @@ public class RedisSessionController {
     public void getRequestContent(HttpServletRequest request) {
         log.info("request.getRequestURI(): {} ", request.getRequestURI());
     }
+
+    @GetMapping("/testRedisGetAndSet")
+    public void getRedisGetAndSet(HttpServletRequest request) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName("userName");
+        List<String> urlList = new ArrayList<>();
+        urlList.add("/good/url");
+        urlList.add("/bad/url");
+        userInfo.setUrlList(urlList);
+
+        List<String> functionList = new ArrayList<>();
+        functionList.add("function_id_1");
+        functionList.add("function_id_0");
+        userInfo.setFunctionList(functionList);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName", userInfo.getUserName());
+        map.put("urlList", userInfo.getUrlList());
+        map.put("functionList", userInfo.getFunctionList());
+
+        redisTemplate.opsForValue().set("userInfo", map);
+    }
 }
