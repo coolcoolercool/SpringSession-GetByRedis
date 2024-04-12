@@ -2,11 +2,13 @@ package org.example.redissession;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @SpringBootApplication
 @EnableRedisHttpSession//增加redissession缓存支持
+@EnableDiscoveryClient
 @ComponentScan(basePackages = "org.example.redissession.controller")
 public class RedisSessionApplication {
 

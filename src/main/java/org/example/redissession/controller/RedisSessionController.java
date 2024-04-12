@@ -2,6 +2,9 @@ package org.example.redissession.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.redissession.entity.Student;
 import org.example.redissession.entity.UserInfo;
@@ -17,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "redisSession 测试接口")
 @RestController
 @Slf4j
 @RequestMapping("/test/")
@@ -30,6 +34,8 @@ public class RedisSessionController {
      * @param request
      * @return
      */
+    @Operation(summary = "在session中新增kv", description = "前端或者gateway调用")
+    @Parameter
     @ResponseBody
     @RequestMapping("/setSession")
     public String setSession(HttpServletRequest request){

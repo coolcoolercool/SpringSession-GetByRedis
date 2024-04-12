@@ -1,4 +1,4 @@
-package org.example.redissession.controller;
+package org.example.redissession.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

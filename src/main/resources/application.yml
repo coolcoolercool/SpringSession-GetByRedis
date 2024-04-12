@@ -1,4 +1,11 @@
+server:
+  #  servlet:
+  #    context-path: /context-path
+  port: 8888
+
 spring:
+  application:
+    name: redis-session
 #  mvc:
 #    servlet:
 #      path: /path
@@ -13,6 +20,12 @@ spring:
         max-active: 32
         min-idle: 8
   cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace:
+      discovery:
+        server-add: localhost:8848
     sentinel:
       enabled: true
       eager: true # 取消控制台懒加载，项目启动即连接Sentinel
@@ -22,8 +35,5 @@ spring:
       filter:
         enabled: false
 
-server:
-#  servlet:
-#    context-path: /context-path
-  port: 8888
+
 

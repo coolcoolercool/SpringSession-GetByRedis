@@ -43,19 +43,39 @@
 			<version>2.0.48</version>
 		</dependency>-->
 
-		<!-- sentinel 启动器 -->
+<!--		&lt;!&ndash; sentinel 启动器 &ndash;&gt;
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
 			<version>${spring-cloud-alibaba.version}</version>
 		</dependency>
-		<!-- sentinel 整合 gateway -->
+		&lt;!&ndash; sentinel 整合 gateway &ndash;&gt;
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
 			<version>${spring-cloud-alibaba.version}</version>
+		</dependency>-->
+
+		<!--nacos-->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			<version>${spring-cloud-alibaba.version}</version>
+		</dependency>
+		<!-- nacos客户端依赖包 -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+			<version>${spring-cloud-alibaba.version}</version>
 		</dependency>
 
+		<!-- 导入SpringBoot集成Open API 3.0（Swagger3.0）的坐标 -->
+		<!-- 这个坐标它提供了一组注解和工具来集成Swagger UI和OpenAPI规范等-->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.7.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
