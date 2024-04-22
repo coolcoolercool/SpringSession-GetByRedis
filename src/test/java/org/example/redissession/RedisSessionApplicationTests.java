@@ -100,4 +100,14 @@ class RedisSessionApplicationTests {
 		redisTemplate.opsForValue().set("userInfo", userInfo);
 		//redisTemplate.opsForHash().put("hashKey", "userInfo", userInfo);
 	}
+
+	@Test
+	void testTokenSubString() {
+		String tokenOrg = "bearertokenstr";
+		String token = tokenOrg.substring(6);
+		log.info("token:{}", token);
+
+		String tokenPrefix = tokenOrg.substring(0, 6);
+		log.info("tokenPrefix:{}", tokenPrefix);
+	}
 }
